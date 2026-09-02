@@ -4,3 +4,6 @@ backend/data/
 *.db
 *.log
 .DS_Store
+frontend/vite.config.js
+frontend/vite.config.d.ts
+*.tsbuildinfo
