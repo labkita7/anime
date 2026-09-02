@@ -8,8 +8,8 @@ Pendamping: `docs/PRD.md` (spesifikasi lengkap: kontrak API §8, skema DB §9, d
 2. Ikuti `docs/PRD.md` sebagai kebenaran tunggal. Kontrak API (§8) harus diikuti **persis** — nama field, tipe, dan status HTTP.
 3. **Dependensi terkunci** — jangan menambah library apa pun di luar daftar ini tanpa mencatat alasannya di commit:
    - Frontend: `react`, `react-dom`, `react-router-dom@6`, `tailwindcss@3.4`, `postcss`, `autoprefixer`, `lucide-react`, `react-hot-toast`
-   - Backend: `express@4`, `better-sqlite3`, `cors`, `morgan`, `helmet`, `express-rate-limit`, `zod`
-   - Root: `concurrently`; testing: `vitest`
+   - Backend: `express@4`, `better-sqlite3@12` (v12 = dukungan Node 24), `cors`, `morgan`, `helmet`, `express-rate-limit`, `zod`
+   - Root: `concurrently`; testing: `vitest`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@types/node` (untuk render test & tipe vite.config)
 4. **Jangan menyalin apa pun dari situs referensi** (nama, logo, teks, gambar, CSS). Semua konten fixture harus **fiktif** (judul & sinopsis karangan sendiri; poster = SVG placeholder lokal; video = file contoh berlisensi bebas atau lokal).
 5. Satu task = satu commit (`feat: …` / `fix: …`). Jangan centang task sebelum kriteria "Selesai jika" terpenuhi dan aplikasi masih jalan.
 6. Bila bingung antara dua implementasi, pilih yang paling sederhana yang memenuhi "Selesai jika".
