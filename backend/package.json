@@ -8,7 +8,7 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "seed": "node scripts/seed.js",
-    "test": "vitest run"
+    "test": "PROVIDER=mock vitest run"
   },
   "dependencies": {
     "better-sqlite3": "^12.11.1",

@@ -1,6 +1,6 @@
 # TODO-API — Integrasi Provider AniStream Asli
 
-Status: **SELESAI DIKERJAKAN** (2026-09-03 — T101–T123 selesai; test backend 38/38, frontend 20/20; smoke browser dengan `PROVIDER=anistream` terverifikasi: beranda data asli, detail, watch iframe `/play/:token` termuat, konsol bersih; rate limit 429 + Retry-After tetap bekerja, cache hit 5ms)
+Status: **SELESAI DIKERJAKAN** (2026-09-03 — T101–T123 selesai; `PROVIDER=anistream` sekarang default, `npm run dev:mock` untuk fixture fiktif; test backend 38/38 (selalu mock via env), frontend 20/20; smoke browser dengan provider asli terverifikasi: beranda data asli, detail, watch iframe `/play/:token` termuat, konsol bersih; rate limit 429 + Retry-After tetap bekerja, cache hit 5ms)
 Analisis awal: 2026-09-02, semua temuan diverifikasi langsung ke API live.
 Prasyarat: MVP KageStream (T001–T038) sudah ada di repo. Dokumen ini tidak menggantikan `docs/TODO.md`, melainkan menambah fase baru.
 Cara pakai: kerjakan berurutan T101 → T123. Satu task = satu commit. Jangan lompat fase.
@@ -84,7 +84,7 @@ Cara mainnya (diamati dari halaman watch asli): iframe `src = {API_URL}/play/{to
 ## 2. Keputusan arsitektur
 
 1. **Adapter di backend, frontend tidak berubah URL.** Frontend tetap memanggil `/api/v1` milik kita (kontrak PRD §8). `AniStreamProvider` mengambil dari API remote, memetakan bentuk respons ke kontrak kita, dan mengembalikannya. Ini dipaksa oleh kendala CORS (§1.4 poin 1) sekaligus menjaga frontend tetap provider-agnostic.
-2. **`PROVIDER=mock` tetap default.** Provider `anistream` opt-in via env. Test dan dev tetap stabil tanpa jaringan.
+2. **Default provider: `anistream`** (per keputusan operator, 2026-09-03). `PROVIDER=mock` tetap tersedia untuk dev/test offline (`npm run dev:mock`; test backend memaksa `PROVIDER=mock` agar deterministik).
 3. **Interface provider diperluas.** Saat ini route detail/stream mengambil episodes & tetangga episode langsung dari SQLite (`listEpisodes`, `getNeighborEpisodes` di `lib/query.js`) — itu harus pindah ke provider agar bisa diganti remote.
 4. **Pemetaan kunci** (remote → kontrak kita):
    - `status: "completed"` → `"complete"` (tipe frontend `'ongoing' | 'complete'`).

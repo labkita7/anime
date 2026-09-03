@@ -7,8 +7,8 @@ Platform streaming anime (klon fungsional AniStream) — frontend React/Vite + b
 ```bash
 npm install      # menginstal root + backend + frontend (npm workspaces)
 npm run seed     # mengisi SQLite dengan 24 anime fixture fiktif (wajib sebelum dev)
-npm run dev            # menjalankan backend :4000 + frontend :3000 bersamaan (provider mock)
-npm run dev:anistream  # sama, tetapi PROVIDER=anistream (data dari API AniStream asli)
+npm run dev            # menjalankan backend :4000 + frontend :3000 bersamaan (PROVIDER=anistream)
+npm run dev:mock       # sama, tetapi PROVIDER=mock (SQLite fixture fiktif)
 npm test         # vitest backend + frontend
 npm run build    # build produksi frontend (dist/)
 ```
@@ -28,8 +28,8 @@ docs/       PRD.md (spesifikasi lengkap), TODO.md (task eksekusi)
 | Variabel | Default | Keterangan |
 |---|---|---|
 | `PORT` | `4000` | Port backend |
-| `PROVIDER` | `mock` | ContentProvider aktif: `mock` (SQLite fixture fiktif) atau `anistream` (proxy API AniStream asli) |
-| `ANISTREAM_API_URL` | `https://anistreambo.hazz.biz.id/api/v1` | Base URL upstream (hanya dipakai saat `PROVIDER=anistream`) |
+| `PROVIDER` | `anistream` | ContentProvider aktif: `anistream` (proxy API AniStream asli) atau `mock` (SQLite fixture fiktif) |
+| `ANISTREAM_API_URL` | `https://anistreambo.hazz.biz.id/api/v1` | Base URL upstream (dipakai saat `PROVIDER=anistream`) |
 | `VITE_API_URL` | `/api/v1` | Base URL API untuk frontend |
 
 ### Provider `anistream`
@@ -38,4 +38,4 @@ docs/       PRD.md (spesifikasi lengkap), TODO.md (task eksekusi)
 
 ## Sumber konten
 
-Dua mode: `PROVIDER=mock` (default) memakai fixture **fiktif** (`backend/fixtures/anime.fixture.json`); `PROVIDER=anistream` memakai data nyata dari API AniStream yang **tidak berlisensi** (scrape otakudesu + file-host pihak ketiga). Mengaktifkan provider asli — dan seluruh konsekuensi legalnya — sepenuhnya menjadi tanggung jawab operator (PRD §11).
+Dua mode: `PROVIDER=anistream` (**default**) memakai data nyata dari API AniStream yang **tidak berlisensi** (scrape otakudesu + file-host pihak ketiga); `PROVIDER=mock` memakai fixture **fiktif** (`backend/fixtures/anime.fixture.json`) untuk dev/test. Menjalankan mode asli — dan seluruh konsekuensi legalnya — sepenuhnya menjadi tanggung jawab operator (PRD §11 & §14).

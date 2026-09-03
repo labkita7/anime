@@ -6,11 +6,11 @@ const providers = {
   anistream: createAniStreamProvider(),
 };
 
-export function getProvider(name = process.env.PROVIDER || 'mock') {
+export function getProvider(name = process.env.PROVIDER || 'anistream') {
   const provider = providers[name];
   if (!provider) {
-    console.warn(`PROVIDER "${name}" tidak dikenal, fallback ke mock`);
-    return providers.mock;
+    console.warn(`PROVIDER "${name}" tidak dikenal, fallback ke anistream`);
+    return providers.anistream;
   }
   return provider;
 }

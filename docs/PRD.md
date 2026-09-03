@@ -315,7 +315,7 @@ Latar `#0f1117`, permukaan kartu `#1a1d27`, teks utama `#e5e7eb`, aksen utama be
 
 ## 14. Addendum: Provider AniStream Asli (2026-09-03)
 
-Implementasi tersedia sebagai **provider opsional** `anistream` (PROVIDER=anistream); default tetap `mock` (lihat §11). Ringkasan:
+Implementasi tersedia dan **menjadi provider default** `anistream` (`PROVIDER=anistream`); `PROVIDER=mock` tersedia untuk dev/test (`npm run dev:mock`). Ringkasan:
 
 1. **Arsitektur**: AniStreamProvider di backend mem-proxy API upstream anistreambo.hazz.biz.id/api/v1 dan memetakan responsnya ke kontrak §8. Frontend tidak berubah - CORS upstream terkunci ke origin resmi AniStream, jadi akses langsung dari browser tidak mungkin (detail temuan: docs/TODO-API.md §1).
 2. **Sumber play**: kualitas/server upstream berupa token UUID yang di-embed lewat {API}/play/{token} (mode iframe). default_player upstream dipetakan ke defaultPlayer kontrak §8.
