@@ -7,3 +7,4 @@ backend/data/
 frontend/vite.config.js
 frontend/vite.config.d.ts
 *.tsbuildinfo
+.hoplite/archive/

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import type { Anime } from '../types';
 import { formatScore } from '../lib/format';
+import PosterImage from './PosterImage';
 
 export function Badge({
   status,
@@ -31,18 +32,7 @@ export default function AnimeCard({ anime }: { anime: Anime }) {
       aria-label={anime.title}
     >
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-[#262a38]">
-        {anime.posterUrl ? (
-          <img
-            src={anime.posterUrl}
-            alt={anime.title}
-            loading="lazy"
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center text-sm text-gray-500">
-            Tanpa Poster
-          </div>
-        )}
+        <PosterImage src={anime.posterUrl} alt={anime.title} className="h-full w-full object-cover" />
         <div className="absolute left-2 top-2">
           <Badge status={anime.status} />
         </div>

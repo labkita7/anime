@@ -115,6 +115,20 @@ export function getEpisodeBySlug(episodeSlug) {
   };
 }
 
+export function getNeighborsByEpisodeSlug(episodeSlug) {
+  const row = db
+    .prepare('SELECT anime_id, episode_number FROM episodes WHERE slug = ?')
+    .get(episodeSlug);
+  if (!row) return { prevEpisodeSlug: null, nextEpisodeSlug: null };
+  return getNeighborEpisodes(row.anime_id, row.episode_number);
+}
+
+export function listEpisodesByAnimeSlug(animeSlug, page, limit) {
+  const anime = db.prepare('SELECT id FROM animes WHERE slug = ?').get(animeSlug);
+  if (!anime) return { data: [], total: 0 };
+  return listEpisodes(anime.id, page, limit);
+}
+
 export function getNeighborEpisodes(animeId, episodeNumber) {
   const prev = db
     .prepare('SELECT slug FROM episodes WHERE anime_id = ? AND episode_number < ? ORDER BY episode_number DESC LIMIT 1')

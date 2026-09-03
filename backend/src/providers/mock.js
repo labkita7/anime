@@ -21,4 +21,12 @@ export default {
     // MockProvider: resolusi ulang sumber adalah no-op; sumber saat ini dikembalikan.
     return query.getEpisodeBySlug(episodeSlug);
   },
+  // Interface diperluas agar route tidak membaca SQLite langsung —
+  // provider remote (anistream) juga harus bisa menyediakan data ini.
+  listEpisodes(animeSlug, page, limit) {
+    return query.listEpisodesByAnimeSlug(animeSlug, page, limit);
+  },
+  getNeighbors(episodeSlug) {
+    return query.getNeighborsByEpisodeSlug(episodeSlug);
+  },
 };

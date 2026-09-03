@@ -312,3 +312,13 @@ Latar `#0f1117`, permukaan kartu `#1a1d27`, teks utama `#e5e7eb`, aksen utama be
 | Iframe pihak ketiga tidak aman/di-block | Mode `native` adalah default mock; mode `iframe` wajib `sandbox` + CSP |
 | Riwayat localStorage penuh/bentrok antar-versi | Kap 50 entri + versi key (`ks_v1_*`) di `config/site.ts` |
 | Kualitas visual tidak konsisten | Design token §10.1 + komponen terpusat §10.3 |
+
+## 14. Addendum: Provider AniStream Asli (2026-09-03)
+
+Implementasi tersedia sebagai **provider opsional** `anistream` (PROVIDER=anistream); default tetap `mock` (lihat §11). Ringkasan:
+
+1. **Arsitektur**: AniStreamProvider di backend mem-proxy API upstream anistreambo.hazz.biz.id/api/v1 dan memetakan responsnya ke kontrak §8. Frontend tidak berubah - CORS upstream terkunci ke origin resmi AniStream, jadi akses langsung dari browser tidak mungkin (detail temuan: docs/TODO-API.md §1).
+2. **Sumber play**: kualitas/server upstream berupa token UUID yang di-embed lewat {API}/play/{token} (mode iframe). default_player upstream dipetakan ke defaultPlayer kontrak §8.
+3. **Field baru**: respons /stream menambah enriching: boolean (upstream sedang menyinkronkan ulang). UI menampilkan info toast; tombol "Muat ulang sumber" memanggil ?refresh=true.
+4. **Ketahanan**: cache in-memory ber-TTL di backend (list/detail 60 dtk, stream 30 dtk), remote gagal -> 502 {"error"}, /health melaporkan upstream "up"|"down".
+5. **Legalitas**: konten upstream tidak berlisensi (§11 poin 5 berlaku penuh). Mengaktifkan PROVIDER=anistream adalah keputusan dan tanggung jawab operator.

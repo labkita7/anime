@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { api, ApiError } from '../lib/api';
 import type { StreamPayload } from '../types';
 import { usePageMeta } from '../hooks/usePageMeta';
@@ -9,8 +10,11 @@ import PlayerShell from '../components/PlayerShell';
 import EpisodeList from '../components/EpisodeList';
 import ErrorState from '../components/ErrorState';
 import { SkeletonCard } from '../components/SkeletonCard';
+import PosterImage from '../components/PosterImage';
 import { formatScore } from '../lib/format';
 import { Section } from '../components/SectionHeading';
+
+const ENRICHING_MESSAGE = 'Sumber sedang disinkronkan ulang — beberapa kualitas mungkin belum tersedia';
 
 export default function Watch() {
   const { episodeSlug = '' } = useParams();
@@ -18,6 +22,7 @@ export default function Watch() {
   const [episodes, setEpisodes] = useState<Awaited<ReturnType<typeof api.detail>>['episodes']>([]);
   const [error, setError] = useState<ApiError | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   usePageMeta(data?.title, data?.synopsis?.slice(0, 150));
 
@@ -28,6 +33,7 @@ export default function Watch() {
       .stream(episodeSlug)
       .then((payload) => {
         setData(payload);
+        if (payload.enriching) toast(ENRICHING_MESSAGE, { icon: '⏳' });
         markWatched(episodeSlug);
         upsertHistory({
           animeSlug: payload.animeSlug,
@@ -40,6 +46,19 @@ export default function Watch() {
       })
       .catch((err: ApiError) => setError(err))
       .finally(() => setLoading(false));
+  };
+
+  const refreshSources = () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    api
+      .stream(episodeSlug, true)
+      .then((payload) => {
+        setData(payload);
+        if (payload.enriching) toast(ENRICHING_MESSAGE, { icon: '⏳' });
+      })
+      .catch((err: ApiError) => toast.error(err.message))
+      .finally(() => setRefreshing(false));
   };
 
   useEffect(load, [episodeSlug]);
@@ -69,6 +88,19 @@ export default function Watch() {
     <Section>
       <div className="mx-auto max-w-5xl">
         <PlayerShell payload={data} poster={data.posterUrl} />
+
+        <div className="mt-2 flex justify-end">
+          <button
+            type="button"
+            onClick={refreshSources}
+            disabled={refreshing}
+            aria-live="polite"
+            className="flex items-center gap-1 rounded-md bg-[#262a38] px-3 py-2 text-sm text-gray-200 hover:bg-[#323750] disabled:opacity-50"
+          >
+            <RotateCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} aria-hidden />
+            {refreshing ? 'Memuat ulang…' : 'Muat ulang sumber'}
+          </button>
+        </div>
 
         <div className="mt-4 flex items-center justify-between gap-2">
           {data.prevEpisodeSlug ? (
@@ -104,14 +136,7 @@ export default function Watch() {
             ) : null}
           </div>
           <div className="w-full shrink-0 sm:w-1/3">
-            {data.posterUrl ? (
-              <img
-                src={data.posterUrl}
-                alt={data.animeTitle}
-                className="w-32 rounded-md sm:w-full"
-                loading="lazy"
-              />
-            ) : null}
+            <PosterImage src={data.posterUrl} alt={data.animeTitle} className="w-32 rounded-md sm:w-full" />
           </div>
         </div>
 

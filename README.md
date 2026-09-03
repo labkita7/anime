@@ -7,7 +7,8 @@ Platform streaming anime (klon fungsional AniStream) — frontend React/Vite + b
 ```bash
 npm install      # menginstal root + backend + frontend (npm workspaces)
 npm run seed     # mengisi SQLite dengan 24 anime fixture fiktif (wajib sebelum dev)
-npm run dev      # menjalankan backend :4000 + frontend :3000 bersamaan
+npm run dev            # menjalankan backend :4000 + frontend :3000 bersamaan (provider mock)
+npm run dev:anistream  # sama, tetapi PROVIDER=anistream (data dari API AniStream asli)
 npm test         # vitest backend + frontend
 npm run build    # build produksi frontend (dist/)
 ```
@@ -27,9 +28,14 @@ docs/       PRD.md (spesifikasi lengkap), TODO.md (task eksekusi)
 | Variabel | Default | Keterangan |
 |---|---|---|
 | `PORT` | `4000` | Port backend |
-| `PROVIDER` | `mock` | ContentProvider aktif (hanya `mock` di scope ini) |
+| `PROVIDER` | `mock` | ContentProvider aktif: `mock` (SQLite fixture fiktif) atau `anistream` (proxy API AniStream asli) |
+| `ANISTREAM_API_URL` | `https://anistreambo.hazz.biz.id/api/v1` | Base URL upstream (hanya dipakai saat `PROVIDER=anistream`) |
 | `VITE_API_URL` | `/api/v1` | Base URL API untuk frontend |
+
+### Provider `anistream`
+
+`npm run dev:anistream` menjalankan backend sebagai proxy/adapter ke API AniStream asli: frontend tetap memanggil `/api/v1` milik sendiri (kontrak PRD §8 tidak berubah), sementara backend mengambil data upstream dan memetakannya. Ini wajib karena CORS upstream hanya mengizinkan origin resmi AniStream. Poster di-hotlink langsung oleh browser; bila gagal dimuat, tampil placeholder lokal. Rincian teknis: `docs/TODO-API.md`.
 
 ## Sumber konten
 
-Seluruh data berasal dari fixture **fiktif** (`backend/fixtures/anime.fixture.json`) melalui abstraction `ContentProvider` (PRD §11). Menghubungkan provider ke sumber eksternal — dan legalitasnya — sepenuhnya menjadi tanggung jawab operator.
+Dua mode: `PROVIDER=mock` (default) memakai fixture **fiktif** (`backend/fixtures/anime.fixture.json`); `PROVIDER=anistream` memakai data nyata dari API AniStream yang **tidak berlisensi** (scrape otakudesu + file-host pihak ketiga). Mengaktifkan provider asli — dan seluruh konsekuensi legalnya — sepenuhnya menjadi tanggung jawab operator (PRD §11).

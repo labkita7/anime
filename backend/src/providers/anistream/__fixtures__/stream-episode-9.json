@@ -1,0 +1,58 @@
+{
+  "title": "Otome Game Sekai wa Mob ni Kibishii Sekai desu S2 Episode 9 Subtitle Indonesia",
+  "anime_slug": "otome-game-mob-s2-sub-indo",
+  "anime_title": "Otome Game Sekai wa Mob ni Kibishii Sekai desu S2",
+  "poster_url": "https://otakudesu.blog/wp-content/uploads/2026/07/158337.jpg",
+  "episode_number": 9,
+  "synopsis": "",
+  "score": "6.81",
+  "studio": "ENGI",
+  "genres": [
+    "Fantasy",
+    "Harem",
+    "Isekai",
+    "Mecha",
+    "Reincarnation",
+    "Romance",
+    "School"
+  ],
+  "duration": "23 min. per ep.",
+  "release_day": "Kamis",
+  "status": "ongoing",
+  "prev_episode_slug": "otgsmbosd-s2-episode-8-sub-indo",
+  "next_episode_slug": null,
+  "default_player": "393e1f5c-a50b-4e4a-9c38-f7a02ccd2c6d",
+  "streams": {
+    "720p": [
+      {
+        "server": "mega",
+        "token": "393e1f5c-a50b-4e4a-9c38-f7a02ccd2c6d"
+      },
+      {
+        "server": "vidhide",
+        "token": "8f6e6827-5c4d-4ae0-bd31-a8da62da777a"
+      }
+    ],
+    "480p": [
+      {
+        "server": "mega",
+        "token": "2f0072cf-508d-4672-8049-1bb0ab1ec523"
+      },
+      {
+        "server": "vidhide",
+        "token": "8eab2771-c214-4710-95a8-871ce03723dc"
+      }
+    ],
+    "360p": [
+      {
+        "server": "mega",
+        "token": "3af722f1-3cd9-44a7-9823-fee75a08e73a"
+      },
+      {
+        "server": "vidhide",
+        "token": "71a089be-7bdf-4c03-b9de-c9374b00f870"
+      }
+    ]
+  },
+  "enriching": true
+}

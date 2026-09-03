@@ -5,11 +5,18 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import animeRoutes from './routes/anime.js';
 import streamRoutes from './routes/stream.js';
+import { getProvider } from './providers/index.js';
 
 const api = express.Router();
 
-api.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
+api.get('/health', async (_req, res) => {
+  const body = { status: 'ok' };
+  // Provider remote melaporkan ketersediaan upstream (cache 30 dtk); mock tidak punya.
+  const check = getProvider().checkHealth;
+  if (typeof check === 'function') {
+    body.upstream = await check.call(getProvider()).catch(() => 'down');
+  }
+  res.json(body);
 });
 
 // Limit umum; stream & search lebih ketat (header Retry-After untuk UX klien).

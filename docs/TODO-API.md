@@ -1,6 +1,7 @@
 # TODO-API — Integrasi Provider AniStream Asli
 
-Status: **SIAP DIKERJAKAN** (analisis selesai 2026-09-02, semua temuan diverifikasi langsung ke API live)
+Status: **SELESAI DIKERJAKAN** (2026-09-03 — T101–T123 selesai; test backend 38/38, frontend 20/20; smoke browser dengan `PROVIDER=anistream` terverifikasi: beranda data asli, detail, watch iframe `/play/:token` termuat, konsol bersih; rate limit 429 + Retry-After tetap bekerja, cache hit 5ms)
+Analisis awal: 2026-09-02, semua temuan diverifikasi langsung ke API live.
 Prasyarat: MVP KageStream (T001–T038) sudah ada di repo. Dokumen ini tidak menggantikan `docs/TODO.md`, melainkan menambah fase baru.
 Cara pakai: kerjakan berurutan T101 → T123. Satu task = satu commit. Jangan lompat fase.
 
@@ -74,7 +75,7 @@ Cara mainnya (diamati dari halaman watch asli): iframe `src = {API_URL}/play/{to
 
 ### 1.5 Hal yang belum diketahui (risiko)
 
-- **Umur token `/play`**: belum diketahui apakah token bertahan berhari-hari atau dirotasi. Verifikasi di T121.
+- **Umur token `/play`**: saat smoke 2026-09-03, token default episode 9 berbeda dari probe 2026-09-02 — token ikut berganti saat upstream menyinkronkan ulang. Konsekuensinya `?refresh=true` (tombol "Muat ulang sumber") adalah jalur pemulihan yang tepat; jangan meng-cache URL `/play` dalam jangka panjang.
 - **Ketersediaan remote**: `anistreambo.hazz.biz.id` adalah layanan pihak ketiga — bisa berubah URL, mati, atau menutup akses kapan pun tanpa pemberitahuan.
 - Konten yang dilayani API ini **tidak berlisensi** (scrape otakudesu + file-host mega/vidhide). Lihat §5.
 

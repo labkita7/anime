@@ -82,4 +82,6 @@ export interface StreamPayload {
   nextEpisodeSlug: string | null;
   defaultPlayer: string | null;
   streams: Record<string, StreamSource[]>;
+  /** true bila upstream sedang menyinkronkan ulang sumber (provider anistream). */
+  enriching?: boolean;
 }
