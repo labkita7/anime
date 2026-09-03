@@ -1,0 +1,20 @@
+{
+  "query": "otome",
+  "total_results": 2,
+  "data": [
+    {
+      "title": "Otome Kaijuu Caraméliser",
+      "slug": "kaijuu-carameliser-sub-indo",
+      "poster": "https://otakudesu.blog/wp-content/uploads/2026/07/Otome-Kaijuu-Carameliser.jpg",
+      "status": "ongoing",
+      "score": null
+    },
+    {
+      "title": "Otome Game Sekai wa Mob ni Kibishii Sekai desu S2",
+      "slug": "otome-game-mob-s2-sub-indo",
+      "poster": "https://otakudesu.blog/wp-content/uploads/2026/07/158337.jpg",
+      "status": "ongoing",
+      "score": "6.81"
+    }
+  ]
+}
